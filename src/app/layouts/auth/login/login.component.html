@@ -1,0 +1,45 @@
+<div class="row d-flex align-items-center">
+  <img
+    src="../../../../assets/discutiendo-video-curso.jpg"
+    alt=""
+    class="col-md-6 mb-3 mb-md-0"
+  />
+  <form
+    [formGroup]="loginForm"
+    class="col-md-6"
+    (ngSubmit)="loginProfesor()"
+  >
+    <div class="d-flex justify-content-center flex-column h-100">
+      <mat-form-field class="mb-3">
+        <mat-label>Enter your email</mat-label>
+        <input
+          matInput
+          placeholder="pat@example.com"
+          formControlName="email"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field class="mb-3">
+        <mat-label>Ingresa tu contraseña</mat-label>
+        <input
+          formControlName="password"
+          required
+          matInput
+          [type]="hide ? 'password' : 'text'"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{
+            hide ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+      </mat-form-field>
+      <button type="submit" mat-raised-button color="primary">Ingresar</button>
+    </div>
+  </form>
+</div>
