@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { ProfesoresComponent } from './profesores.component';
 import { SharedModule } from "../../../../shared/shared.module";
+import { ProfesoresRoutingModule } from './profesores-routing.module';
 
 
 
@@ -16,7 +17,8 @@ import { SharedModule } from "../../../../shared/shared.module";
     imports: [
         CommonModule,
         MatTableModule,
-        SharedModule
+        SharedModule,
+        ProfesoresRoutingModule
     ]
 })
 export class ProfesoresModule { }

@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlumnosService } from '../../../core/services/alumnos.service';
 import { ProfesoresService } from '../../../core/services/profesores.service';
-import { Alumnos, Profesor } from '../../../shared/models/interfaces';
 import { LoginService } from '../../../core/services/login.service';
 
 @Component({

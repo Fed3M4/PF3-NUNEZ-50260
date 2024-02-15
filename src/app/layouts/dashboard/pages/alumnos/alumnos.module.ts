@@ -12,6 +12,7 @@ import { AlumnosService } from '../../../../core/services/alumnos.service';
 import { MY_ALUMNO_TOKEN } from '../../../../core/injection-token';
 import { UserDetailComponent } from './pages/user-detail/user-detail.component';
 import { RouterModule } from '@angular/router';
+import { AlumnosRoutingModule } from './alumnos-routing.module';
 
 @NgModule({
   declarations: [
@@ -26,10 +27,12 @@ import { RouterModule } from '@angular/router';
     AltaAlumnosModule,
     MatButtonModule,
     MatIconModule,
-    RouterModule
+    RouterModule,
+    AlumnosRoutingModule
   ],
   exports: [
-    AlumnosComponent
+    AlumnosComponent,
+    UserDetailComponent
   ],
   providers: [
     AlumnosService,

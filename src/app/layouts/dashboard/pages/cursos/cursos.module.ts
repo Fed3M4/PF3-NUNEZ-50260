@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CursosComponent } from './cursos.component';
 import {MatCardModule} from '@angular/material/card';
+import { CursosRoutingModule } from './cursos-routing.module';
 
 
 
@@ -11,7 +12,8 @@ import {MatCardModule} from '@angular/material/card';
   ],
   imports: [
     CommonModule,
-    MatCardModule
+    MatCardModule,
+    CursosRoutingModule
   ],
   exports: [
     CursosComponent

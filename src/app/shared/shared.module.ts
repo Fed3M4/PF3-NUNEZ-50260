@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FullNamePipe } from './full-name.pipe';
 import { ColorearUltimoAgregadoDirective } from './colorear-ultimo-agregado.directive';
 import { TitulosTamanioDirective } from './titulos-tamanio.directive';
+import { ValidationErrorsPipe } from './validationErrors.pipe';
 
 
 
@@ -10,7 +11,8 @@ import { TitulosTamanioDirective } from './titulos-tamanio.directive';
   declarations: [
     FullNamePipe,
     ColorearUltimoAgregadoDirective,
-    TitulosTamanioDirective
+    TitulosTamanioDirective,
+    ValidationErrorsPipe
   ],
   imports: [
     CommonModule
@@ -18,7 +20,8 @@ import { TitulosTamanioDirective } from './titulos-tamanio.directive';
   exports: [
     FullNamePipe,
     ColorearUltimoAgregadoDirective,
-    TitulosTamanioDirective
+    TitulosTamanioDirective,
+    ValidationErrorsPipe
   ]
 })
 export class SharedModule { }
