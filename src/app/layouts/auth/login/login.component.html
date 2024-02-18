@@ -18,6 +18,11 @@
           formControlName="email"
           required
         />
+        <mat-error>
+          {{
+            loginForm.get("email")?.errors | validationErrors
+          }}
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="mb-3">
         <mat-label>Ingresa tu contraseña</mat-label>
@@ -27,6 +32,9 @@
           matInput
           [type]="hide ? 'password' : 'text'"
         />
+        <mat-error>
+          {{loginForm.get('password')?.errors| validationErrors}}
+        </mat-error>
         <button
           mat-icon-button
           matSuffix
