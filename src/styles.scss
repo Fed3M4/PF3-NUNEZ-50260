@@ -12,26 +12,26 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$PF3-Nunez-primary: mat.define-palette(mat.$indigo-palette);
-$PF3-Nunez-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$PF2-Nunez-primary: mat.define-palette(mat.$indigo-palette);
+$PF2-Nunez-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$PF3-Nunez-warn: mat.define-palette(mat.$red-palette);
+$PF2-Nunez-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$PF3-Nunez-theme: mat.define-light-theme((
+$PF2-Nunez-theme: mat.define-light-theme((
   color: (
-    primary: $PF3-Nunez-primary,
-    accent: $PF3-Nunez-accent,
-    warn: $PF3-Nunez-warn,
+    primary: $PF2-Nunez-primary,
+    accent: $PF2-Nunez-accent,
+    warn: $PF2-Nunez-warn,
   )
 ));
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($PF3-Nunez-theme);
+@include mat.all-component-themes($PF2-Nunez-theme);
 
 /* You can add global styles to this file, and also import other style files */
 

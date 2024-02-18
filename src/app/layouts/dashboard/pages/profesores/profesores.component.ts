@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { Profesor } from '../../../../shared/models/interfaces';
-import { ProfesoresService } from '../../../../core/services/profesores.service';
-import { LoadingService } from '../../../../core/services/loading.service';
+import { User } from '../../../../shared/models/interfaces';
+import { UsersService } from '../../../../core/services/users.service';
 
 
 @Component({
@@ -12,15 +10,12 @@ import { LoadingService } from '../../../../core/services/loading.service';
 })
 
 export class ProfesoresComponent implements OnInit {
-  // value: string = ' '
-  dataSource: Profesor[] = [];
+  dataSource: User[] = [];
 
-  constructor(private profesoresService: ProfesoresService, private loadingService: LoadingService) {}
+  constructor(private usersService: UsersService) {}
   ngOnInit(): void {
-    this.loadingService.setIsLoading(true);
-    this.profesoresService.getProfesores().subscribe({
+    this.usersService.getProfesores().subscribe({
       next: (profesores) => this.dataSource = profesores,
-      complete: () => {this.loadingService.setIsLoading(false)}
     })
   }
 

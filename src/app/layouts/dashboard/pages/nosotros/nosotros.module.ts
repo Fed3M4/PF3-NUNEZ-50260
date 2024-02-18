@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NosotrosComponent } from './nosotros.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NosotrosRoutingModule } from './nosotros-routing.module';
 
 
 
@@ -11,7 +12,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   ],
   imports: [
     CommonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    NosotrosRoutingModule
   ],
   exports: [
     NosotrosComponent

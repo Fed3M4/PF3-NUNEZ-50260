@@ -1,6 +1,6 @@
 <div class="card-group d-flex justify-content-evenly align-items-stretch">
-    <div *ngFor=" let curso of cursos" class="d-flex p-1" style="width: 18rem;">
-        <mat-card class="example-card">
+    <div *ngFor=" let curso of cursos" class="d-flex p-1 card-body" style="width: 18rem; height: 24rem;">
+        <mat-card class="example-card d-flex justify-content-between">
             <mat-card-header>
               <mat-card-title-group>
                 <mat-card-title>{{curso.name}}</mat-card-title>
@@ -11,6 +11,7 @@
             <mat-card-content>
               {{curso.description}}
             </mat-card-content>
+              <button mat-raised-button color="primary" (click)="openInscriptionModal(curso)">Inscribirse</button>
           </mat-card>
     </div>
 </div>

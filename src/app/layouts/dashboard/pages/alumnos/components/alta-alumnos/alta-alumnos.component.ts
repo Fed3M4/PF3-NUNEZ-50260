@@ -1,27 +1,38 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AlertService } from '../../../../../../core/services/alerts.service';
+import { Curso } from '../../../../../../shared/models/interfaces';
+import { CursosService } from '../../../../../../core/services/cursos.service';
 
 @Component({
   selector: 'app-alta-alumnos',
   templateUrl: './alta-alumnos.component.html',
   styleUrl: './alta-alumnos.component.scss'
 })
-export class AltaAlumnosComponent {
+export class AltaAlumnosComponent implements OnInit{
   studentForm: FormGroup;
+  cursos?: Curso[];
 
   @Output()
   userSubmitted = new EventEmitter();
 
-  constructor(public dialogRef: MatDialogRef<AltaAlumnosComponent>, private fb: FormBuilder, private alertService: AlertService ) {
+  constructor(public dialogRef: MatDialogRef<AltaAlumnosComponent>, private fb: FormBuilder, private alertService: AlertService, private cursosService: CursosService) {
     this.studentForm = this.fb.group({
       firstName: this.fb.control('', [Validators.required, Validators.minLength(2)]),
       lastName: this.fb.control('', [Validators.required, Validators.minLength(2)]),
       email: this.fb.control('', [Validators.required, Validators.email]),
       phone: this.fb.control('', Validators.required),
-      password: this.fb.control('', [Validators.required, Validators.minLength(8)])
+      password: this.fb.control('', [Validators.required, Validators.minLength(8)]),
+      curso: this.fb.control('', [Validators.required])
     })
+  }
+  ngOnInit(): void {
+    this.cursosService.getCursos().subscribe({
+      next: (cursos) =>this.cursos = [...cursos]
+      }
+    )
+    console.log(this.cursos)
   }
   onSubmit():void {
     if(this.studentForm.invalid) {

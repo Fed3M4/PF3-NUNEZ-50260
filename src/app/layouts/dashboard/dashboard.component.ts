@@ -42,6 +42,7 @@ export class DashboardComponent implements OnInit {
       console.log(this.isLoggedIn);
     } else {
       this.isLoggedIn = false;
+      console.log(this.isLoggedIn);
     }
   }
   logout(): void {

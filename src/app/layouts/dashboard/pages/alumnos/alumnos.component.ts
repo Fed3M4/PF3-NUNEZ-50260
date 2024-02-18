@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AlumnosService } from '../../../../core/services/alumnos.service';
-import { Alumnos } from '../../../../shared/models/interfaces';
+import { User } from '../../../../shared/models/interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { AltaAlumnosComponent } from './components/alta-alumnos/alta-alumnos.component';
+import { UsersService } from '../../../../core/services/users.service';
 
 @Component({
   selector: 'app-alumnos',
@@ -11,22 +11,22 @@ import { AltaAlumnosComponent } from './components/alta-alumnos/alta-alumnos.com
 })
 export class AlumnosComponent implements OnInit {
   displayedColumns: string[] = ['id', 'fullName', 'phone', 'email', 'delete'];
-  dataSource: Alumnos[] = [];
+  dataSource: User[] = [];
   colorearTabla = false;
 
   constructor(
-    private alumnoService: AlumnosService,
+    private usersService: UsersService,
     private dialog: MatDialog
   ) {}
   ngOnInit(): void {
-    this.alumnoService.getAlumnos().subscribe({
+    this.usersService.getAlumnos().subscribe({
       next: (alumnos) => (this.dataSource = alumnos),
     });
   }
 
-  eliminarAlumnos(element: Alumnos): void {
+  eliminarAlumnos(element: User): void {
     if(confirm('¿Estas seguro?')){
-      this.alumnoService.deleteAlumno(element.id).subscribe({
+      this.usersService.deleteUser(element.id).subscribe({
         next: (alumnos) => {
           this.dataSource = [...alumnos];
         },
@@ -39,9 +39,9 @@ export class AlumnosComponent implements OnInit {
       width: '75vw',
       height: 'auto',
     });
-    dialogRef.componentInstance.userSubmitted.subscribe((newUser: Alumnos) => {
-      this.alumnoService
-        .createAlumno({ ...newUser, id: this.dataSource.length + 1 })
+    dialogRef.componentInstance.userSubmitted.subscribe((newUser: User) => {
+      this.usersService
+        .createUser({ ...newUser, id: this.dataSource.length + 1, isActive: true, role: 'Alumno' })
         .subscribe({
           next: (alumnos) => {
             console.log(alumnos);

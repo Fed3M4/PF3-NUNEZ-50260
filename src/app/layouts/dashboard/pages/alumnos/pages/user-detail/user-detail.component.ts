@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlumnosService } from '../../../../../../core/services/alumnos.service';
-import { Alumnos } from '../../../../../../shared/models/interfaces';
+import { User } from '../../../../../../shared/models/interfaces';
 import { LoadingService } from '../../../../../../core/services/loading.service';
+import { UsersService } from '../../../../../../core/services/users.service';
+import { AlertService } from '../../../../../../core/services/alerts.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -10,12 +11,16 @@ import { LoadingService } from '../../../../../../core/services/loading.service'
   styleUrl: './user-detail.component.scss'
 })
 export class UserDetailComponent {
-  userFinded?: Alumnos
-  constructor(private route: ActivatedRoute, private alumnosService: AlumnosService, private loadingService: LoadingService, private router: Router){
-    this.alumnosService.getAlumnosByID(this.route.snapshot.params['id']).subscribe({
+  userFinded?: User
+  constructor(private route: ActivatedRoute, private usersService: UsersService, private loadingService: LoadingService, private router: Router, private alertService: AlertService){
+    this.usersService.getUserByID(this.route.snapshot.params['id']).subscribe({
       next: (findedUser) => {
-        console.log(findedUser)
-        this.userFinded = findedUser
+        if(findedUser.role == 'Alumno') {
+          this.userFinded = findedUser
+        } else {
+          this.alertService.showError('No hay alumno con ese ID')
+        }
+        
         // this.router.navigate(['dashboard', 'alumnos', ':id'], {
         //   queryParams: {
         //     nombre: findedUser?.firstName,

@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthRoutingModule } from '../auth-routing.module';
-import { SharedModule } from '../../../shared/shared.module';
 
 
 
@@ -23,8 +22,7 @@ import { SharedModule } from '../../../shared/shared.module';
     ReactiveFormsModule,
     MatIconModule,
     MatButtonModule,
-    AuthRoutingModule,
-    SharedModule
+    AuthRoutingModule
   ],
   exports: [
     LoginComponent
