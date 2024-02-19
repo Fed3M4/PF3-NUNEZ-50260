@@ -19,8 +19,6 @@ export class DashboardComponent implements OnInit {
   constructor(
     private loadingService: LoadingService,
     private loginService: LoginService,
-    private router: Router,
-    private route: ActivatedRoute,
     private alertService: AlertService,
     private authService: AuthService
   ) {
@@ -50,8 +48,6 @@ export class DashboardComponent implements OnInit {
   logout(): void {
     if (confirm('¿Querés desloguearte?')) {
       this.authService.logout()
-      // this.router.navigate(['dashboard', 'login']);
-      //ademas aca va la logica para borrar el usuario que esta logueado
       this.user = '';
       this.userLoggeded();
       this.alertService.showSucces('¡Deslogueadoo con éxito!', '¡Hasta la próxima!')

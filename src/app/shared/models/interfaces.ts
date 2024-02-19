@@ -37,3 +37,8 @@ export interface User {
     curso: string;
     role: string;
 }
+
+export interface LoginData {
+    email: string;
+    password: string
+}

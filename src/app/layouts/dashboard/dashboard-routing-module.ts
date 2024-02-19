@@ -1,14 +1,11 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { LoginComponent } from "../auth/login/login.component";
-import { DashboardComponent } from "./dashboard.component";
-import { authGuard } from "../../core/guards/auth.guard";
 import { adminGuard } from "../../core/guards/admin.guard";
 
 const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {
-        path: '', component: DashboardComponent,
+        path: '',
         children: [
             {path: 'home', 
             loadChildren: () => import('./pages/home/home.module').then((m) => m.HomeModule)},
@@ -25,9 +22,6 @@ const routes: Routes = [
             
         ]
     },
-    // {path: 'login', component: LoginComponent, loadChildren: () => import('../auth/auth.module').then((m)=> m.AuthModule)},
-    // {path: 'logout', redirectTo: 'dashboard/login', pathMatch: 'full'},
-
 ]
 
 @NgModule({

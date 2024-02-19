@@ -53,7 +53,7 @@ let USERS_DB: User[] = [
     password: '12345678',
     isActive: true,
     curso: 'ReactJS',
-    role: 'Alumno',
+    role: 'ADMIN',
   },
   {
     id: 5,
