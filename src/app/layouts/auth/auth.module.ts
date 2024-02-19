@@ -21,7 +21,8 @@ import { MatButtonModule } from "@angular/material/button";
         ReactiveFormsModule,
         MatIconModule,
         MatButtonModule,
-    ]
+    ],
+    exports: [LoginComponent]
 })
 
 export class AuthModule {}

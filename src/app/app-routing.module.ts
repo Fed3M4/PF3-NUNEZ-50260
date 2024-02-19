@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './layouts/auth/login/login.component';
 import { NotFoundComponent } from './layouts/not-found/not-found.component';
-import { DashboardRoutingModule } from './layouts/dashboard/dashboard-routing-module';
-import { AlumnosRoutingModule } from './layouts/dashboard/pages/alumnos/alumnos-routing.module';
-
+import { DashboardComponent } from './layouts/dashboard/dashboard.component';
+import { authGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
     path:'', redirectTo: 'dashboard/home', pathMatch: 'full'
   },
   {
-    path: 'dashboard', loadChildren: () => import('./layouts/dashboard/dashboard.module').then((m)=> m.DashboardModule)
+    path: 'dashboard', canActivate: [authGuard], component: DashboardComponent, loadChildren: () => import('./layouts/dashboard/dashboard.module').then((m)=> m.DashboardModule)
   },
   {
     path: 'auth', loadChildren: () => import('./layouts/auth/auth.module').then((m) => m.AuthModule)
@@ -26,7 +24,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), DashboardRoutingModule, AlumnosRoutingModule],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

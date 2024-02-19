@@ -3,6 +3,7 @@ import { LoadingService } from '../../core/services/loading.service';
 import { LoginService } from '../../core/services/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../core/services/alerts.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +21,8 @@ export class DashboardComponent implements OnInit {
     private loginService: LoginService,
     private router: Router,
     private route: ActivatedRoute,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private authService: AuthService
   ) {
     this.loadingService.isLoading$.subscribe({
       next: (value) => {
@@ -47,8 +49,8 @@ export class DashboardComponent implements OnInit {
   }
   logout(): void {
     if (confirm('¿Querés desloguearte?')) {
-      // this.router.navigate(['users'], {relativeTo: this.route}) //para convertir users en una ruta relaiva
-      this.router.navigate(['dashboard', 'login']);
+      this.authService.logout()
+      // this.router.navigate(['dashboard', 'login']);
       //ademas aca va la logica para borrar el usuario que esta logueado
       this.user = '';
       this.userLoggeded();
