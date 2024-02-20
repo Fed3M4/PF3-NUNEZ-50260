@@ -21,22 +21,25 @@ export class AuthService {
     }
   }
 
-
-  // login(userLogged: User | null): void {
-  //   this.authUser = userLogged;
-  //   this.router.navigate(['dashboard', 'home']);
-  // }
   login(data: LoginData): void {
     const email = data.email
     const password = data.password
-    const emailAndPassUser = this.usersService.getUserByEmailAndPassword(email, password);
-    if(emailAndPassUser){
-      this.loginService.setUserName(emailAndPassUser.firstName);
-      this.setAuthUser(emailAndPassUser);
-      this.router.navigate(['dashboard', 'home']);
-    } else {
-      this.alertService.showError('Email o contraseña inválida')
-    }
+    this.usersService.getUserByEmailAndPassword(email, password).subscribe({
+      next: (emailAndPassUser) => {
+        if (emailAndPassUser) {
+          this.loginService.setUserName(emailAndPassUser.firstName);
+          console.log(emailAndPassUser)
+          this.setAuthUser(emailAndPassUser);
+          this.router.navigate(['dashboard', 'home']);
+        } else {
+          this.alertService.showError('Email o contraseña inválida');
+        }
+      },
+      error: (error) => {
+        console.error('Error al obtener usuario:', error);
+        this.alertService.showError('Error al obtener usuario');
+      }
+    });
   }
 
   logout(): void {

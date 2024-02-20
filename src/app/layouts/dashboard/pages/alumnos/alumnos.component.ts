@@ -3,6 +3,7 @@ import { User } from '../../../../shared/models/interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { AltaAlumnosComponent } from './components/alta-alumnos/alta-alumnos.component';
 import { UsersService } from '../../../../core/services/users.service';
+import { LoadingService } from '../../../../core/services/loading.service';
 
 @Component({
   selector: 'app-alumnos',
@@ -16,7 +17,8 @@ export class AlumnosComponent implements OnInit {
 
   constructor(
     private usersService: UsersService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private loadingService: LoadingService
   ) {}
   ngOnInit(): void {
     this.usersService.getAlumnos().subscribe({
@@ -27,9 +29,13 @@ export class AlumnosComponent implements OnInit {
   eliminarAlumnos(element: User): void {
     if(confirm('¿Estas seguro?')){
       this.usersService.deleteUser(element.id).subscribe({
-        next: (alumnos) => {
-          this.dataSource = [...alumnos];
-        },
+        next: () => {
+          this.usersService.getAlumnos().subscribe({
+            next: (alumnos) => {
+              this.dataSource = [...alumnos];
+            },
+          })
+        }
       });
     }
   }
@@ -41,15 +47,22 @@ export class AlumnosComponent implements OnInit {
     });
     dialogRef.componentInstance.userSubmitted.subscribe((newUser: User) => {
       this.usersService
-        .createUser({ ...newUser, id: this.dataSource.length + 1, isActive: true, role: 'Alumno' })
+        .createUser({ ...newUser, id: this.dataSource[this.dataSource.length - 1].id + 1, isActive: true, role: 'Alumno' })
         .subscribe({
-          next: (alumnos) => {
-            console.log(alumnos);
-            this.dataSource = [...alumnos];
+          next: () => {
+            this.usersService.getAlumnos().subscribe({
+              next: (alumnos) => {
+                this.dataSource = alumnos;
+                this.colorearTabla = true;
+              },
+              error: (error) => {
+                console.error('Error al obtener los alumnos:', error);
+              }
+            });
           },
-          complete: () => {
-            this.colorearTabla = true;
-          },
+          error: (error) => {
+            console.error('Error al crear el usuario:', error);
+          }
         });
     });
   }
