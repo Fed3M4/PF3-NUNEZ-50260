@@ -20,7 +20,7 @@ export class UserDetailComponent {
         } else {
           this.alertService.showError('No hay alumno con ese ID')
         }
-        
+         
         // this.router.navigate(['dashboard', 'alumnos', ':id'], {
         //   queryParams: {
         //     nombre: findedUser?.firstName,

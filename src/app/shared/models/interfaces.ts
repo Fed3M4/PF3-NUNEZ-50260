@@ -36,6 +36,7 @@ export interface User {
     isActive: boolean;
     curso: string;
     role: string;
+    token: string
 }
 
 export interface LoginData {
