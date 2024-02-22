@@ -1,8 +1,8 @@
-<div class="row d-flex align-items-center">
+<div class="login row d-flex align-item-center ">
   <img
     src="../../../../assets/discutiendo-video-curso.jpg"
     alt=""
-    class="col-md-6 mb-3 mb-md-0"
+    class="col-md-6 mb-3 mb-md-0 p-5"
   />
   <form
     [formGroup]="loginForm"
@@ -11,7 +11,7 @@
   >
     <div class="d-flex justify-content-center flex-column h-100">
       <mat-form-field class="mb-3">
-        <mat-label>Enter your email</mat-label>
+        <mat-label>Ingresa tu correo</mat-label>
         <input
           matInput
           placeholder="pat@example.com"
@@ -31,6 +31,7 @@
           required
           matInput
           [type]="hide ? 'password' : 'text'"
+          (keydown)="onSubmit()"
         />
         <mat-error>
           {{loginForm.get('password')?.errors| validationErrors}}
