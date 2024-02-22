@@ -131,6 +131,18 @@
       "isActive": true,
       "role": "Alumno",
       "token": "zd4WFix04f62w4y"
+    },
+    {
+      "id": "dada",
+      "firstName": "Iana",
+      "lastName": "Nuñez",
+      "email": "iana@gmail.com",
+      "phone": "7638762163821",
+      "password": "dkjashdkjahskdh",
+      "curso": "option",
+      "isActive": true,
+      "role": "Alumno",
+      "token": "KLZFYCFME9cEp5w"
     }
   ],
   "courses": [
