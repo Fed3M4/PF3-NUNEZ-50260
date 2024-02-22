@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingService } from '../../core/services/loading.service';
 import { LoginService } from '../../core/services/login.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../core/services/alerts.service';
 import { AuthService } from '../auth/auth.service';
 

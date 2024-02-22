@@ -1,0 +1,63 @@
+import { TestBed } from '@angular/core/testing';
+import { LoginComponent } from './login.component';
+import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SharedModule } from '../../../shared/shared.module';
+import { AuthService } from '../auth.service';
+import { MockProvider } from 'ng-mocks';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+
+describe('LoginComponent', () => {
+  let component: LoginComponent;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [LoginComponent],
+      imports: [
+        SharedModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatButtonModule
+    ],
+      providers: [MockProvider(AuthService)],
+    });
+
+    component = TestBed.createComponent(LoginComponent).componentInstance;
+  });
+
+  it('El LoginComponent debe instanciarse correctamente', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('El email y la contrasena deben ser controles requeridos', () => {
+    expect(
+      component.loginForm.get('password')?.hasValidator(Validators.required)
+    ).toBeTrue();
+    expect(
+      component.loginForm.get('email')?.hasValidator(Validators.required)
+    ).toBeTrue();
+  });
+
+  it('Si el formulario es invalido y al llamar submit este debe marcar sus campos como touched', () => {
+    component.loginForm.patchValue({
+      email: '',
+      password: '',
+    });
+
+    expect(component.loginForm.invalid).toBeTrue();
+
+    const spyOnMarkAllAsTouched = spyOn(
+      component.loginForm,
+      'markAllAsTouched'
+    );
+
+    component.onSubmit();
+
+    expect(spyOnMarkAllAsTouched).toHaveBeenCalled();
+  });
+});
