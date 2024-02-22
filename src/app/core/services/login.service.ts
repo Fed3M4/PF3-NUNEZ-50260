@@ -5,11 +5,17 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-
-  constructor() { }
   private userNameSubject = new BehaviorSubject<string>('');
 
-  setUserName(userName: string) {
+  constructor() {
+    const storedUserName = localStorage.getItem('userName');
+    if (storedUserName) {
+      this.userNameSubject.next(storedUserName);
+    }
+  }
+
+  setUserName(userName: string): void {
+    localStorage.setItem('userName', userName);
     this.userNameSubject.next(userName);
   }
 

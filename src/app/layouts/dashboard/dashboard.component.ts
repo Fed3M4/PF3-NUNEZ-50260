@@ -20,7 +20,8 @@ export class DashboardComponent implements OnInit {
     private loginService: LoginService,
     private alertService: AlertService,
     private authService: AuthService
-  ) {
+  ) {}
+  ngOnInit(): void {
     this.loadingService.isLoading$.subscribe({
       next: (value) => {
         setTimeout(() => {
@@ -28,8 +29,7 @@ export class DashboardComponent implements OnInit {
         });
       },
     });
-  }
-  ngOnInit(): void {
+    
     this.loginService.getUserName().subscribe((userName) => {
       this.user = userName;
       this.userLoggeded();
