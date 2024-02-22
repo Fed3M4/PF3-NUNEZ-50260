@@ -1,13 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
-import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 import { AuthService } from '../auth.service';
 import { MockProvider } from 'ng-mocks';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -15,15 +12,7 @@ describe('LoginComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [
-        SharedModule,
-        MatFormFieldModule,
-        MatInputModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        MatButtonModule
-    ],
+      imports: [SharedModule],
       providers: [MockProvider(AuthService)],
     });
 

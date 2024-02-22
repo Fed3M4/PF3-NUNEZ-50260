@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../shared/models/interfaces';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, delay, finalize, map, of } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { AlertService } from './alerts.service';
+import { LoadingService } from './loading.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,8 @@ import { AlertService } from './alerts.service';
 export class UsersService {
   constructor(
     private httpClient: HttpClient,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingService: LoadingService
   ) {}
 
   generateString(length: number) {
@@ -26,37 +28,45 @@ export class UsersService {
   }
 
   getAllUsers() {
-    return this.httpClient.get<User[]>(`${environment.apiURL}/users`).pipe(
+    this.loadingService.setIsLoading(true)
+    return this.httpClient.get<User[]>(`${environment.apiURL}/users`).pipe(delay(1000)).pipe(
       catchError((error) => {
         this.alertService.showError(`Error al cargar los usuarios`);
         return of(error);
-      })
+      }),
+      finalize(()=> this.loadingService.setIsLoading(false))
     );
   }
 
   getAlumnos(): Observable<User[]> {
+    this.loadingService.setIsLoading(true)
     return this.httpClient
       .get<User[]>(`${environment.apiURL}/users`, {
         params: new HttpParams().set('role', 'Alumno'),
       })
       .pipe(
+        delay(1000),
         catchError((error) => {
           this.alertService.showError(`Error al cargar los usuarios`);
           return of(error);
-        })
+        }),
+        finalize(()=> this.loadingService.setIsLoading(false))
       );
   }
 
   getProfesores(): Observable<User[]> {
+    this.loadingService.setIsLoading(true)
     return this.httpClient
       .get<User[]>(`${environment.apiURL}/users`, {
         params: new HttpParams().set('role', 'Profesor'),
       })
       .pipe(
+        delay(1000),
         catchError((error) => {
           this.alertService.showError(`Error al cargar los usuarios`);
           return of(error);
-        })
+        }),
+        finalize(()=> this.loadingService.setIsLoading(false))
       );
   }
 
@@ -105,11 +115,15 @@ export class UsersService {
   }
 
   getUserByID(id: number): Observable<User> {
-    return this.httpClient.get<User>(`${environment.apiURL}/users/${id}`).pipe(
+    this.loadingService.setIsLoading(true)
+    return this.httpClient.get<User>(`${environment.apiURL}/users/${id}`)
+    .pipe(delay(1000))
+    .pipe(
       catchError((error) => {
         this.alertService.showError(`Error al cargar usuario`);
         return of(error);
-      })
+      }),
+      finalize(()=> this.loadingService.setIsLoading(false))
     );
   }
 }

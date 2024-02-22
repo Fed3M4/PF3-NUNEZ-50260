@@ -109,16 +109,28 @@
       "token": "POzykdrYUA3fDZZ"
     },
     {
-      "id": "3881",
-      "firstName": "Joni",
-      "lastName": "Humana",
-      "email": "joni@gmail.com",
-      "phone": "1983792178",
-      "password": "ajdkjdsljlkd",
+      "id": "86d5",
+      "firstName": "Ruben",
+      "lastName": "Lafuente",
+      "email": "ruben@gmail.com",
+      "phone": "132132131",
+      "password": "dmalkdalk",
       "curso": "option",
       "isActive": true,
       "role": "Alumno",
-      "token": "fEMAVtCWSqsND1G"
+      "token": "5Nu4DA15HrupMVs"
+    },
+    {
+      "id": "1555",
+      "firstName": "Gabriel",
+      "lastName": "Guzman",
+      "email": "gg@gmail.com",
+      "phone": "13123123",
+      "password": "kdaljdkjdljak",
+      "curso": "option",
+      "isActive": true,
+      "role": "Alumno",
+      "token": "zd4WFix04f62w4y"
     }
   ],
   "courses": [

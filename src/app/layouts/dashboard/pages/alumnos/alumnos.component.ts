@@ -23,6 +23,10 @@ export class AlumnosComponent implements OnInit {
     private alertService: AlertService
   ) {}
   ngOnInit(): void {
+    this.cargarPantalla()
+  }
+
+  cargarPantalla(): void {
     this.usersService.getAlumnos().subscribe({
       next: (alumnos) => (this.dataSource = alumnos),
     });

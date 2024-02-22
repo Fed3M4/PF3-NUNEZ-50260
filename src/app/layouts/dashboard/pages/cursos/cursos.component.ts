@@ -17,10 +17,8 @@ export class CursosComponent implements OnInit {
 
   constructor(private cursosService: CursosService, private loadingService: LoadingService, private dialog: MatDialog, private usersService: UsersService) {}
   ngOnInit(): void { 
-    this.loadingService.setIsLoading(true);
     this.cursosService.getCursos().subscribe({
       next: (cursos) => this.cursos = cursos,
-      complete: () => this.loadingService.setIsLoading(false)
     })
     this.usersService.getAllUsers().subscribe({
       next: (users) => this.usuarios = users

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Curso } from '../../shared/models/interfaces';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { LoadingService } from './loading.service';
+import { delay, finalize } from 'rxjs';
 
 let CURSOS_DB: Curso[] = [
 ]
@@ -10,10 +12,10 @@ let CURSOS_DB: Curso[] = [
   providedIn: 'root'
 })
 export class CursosService {
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private loadingService: LoadingService) { }
 
   getCursos() {
-    // return of(CURSOS_DB).pipe(delay(2000))
-    return this.httpClient.get<Curso[]>(`${environment.apiURL}/courses`)
+    this.loadingService.setIsLoading(true)
+    return this.httpClient.get<Curso[]>(`${environment.apiURL}/courses`).pipe(delay(1000)).pipe(finalize(()=> this.loadingService.setIsLoading(false)))
   }
 }

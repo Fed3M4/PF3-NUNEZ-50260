@@ -17,7 +17,7 @@ export class HomeComponent {
       setTimeout(() => {
         suscriber.next('Pantalla de inicio cargada'),
         suscriber.complete()
-      }, 3000);
+      }, 2000);
     })
 
     this.loadingService.setIsLoading(true);
