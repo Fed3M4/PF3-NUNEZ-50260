@@ -70,28 +70,6 @@ export class UsersService {
       );
   }
 
-  getUserByEmailAndPassword(
-    email: string,
-    password: string
-  ): Observable<User | null> {
-    return this.httpClient
-      .get<User[]>(`${environment.apiURL}/users`, {
-        params: new HttpParams().set('email', email).set('password', password),
-      })
-      .pipe(
-        map((users: User[]) => {
-          const foundUser = users.find(
-            (user) => user.email === email && user.password === password
-          );
-          return foundUser ? foundUser : null;
-        }),
-        catchError((error) => {
-          console.error('Error al obtener usuario:', error);
-          return of(null);
-        })
-      );
-  }
-
   createUser(payload: User) {
     return this.httpClient
       .post<User[]>(`${environment.apiURL}/users`, {...payload, token: this.generateString(15)})
@@ -103,7 +81,7 @@ export class UsersService {
       );
   }
 
-  deleteUser(userID: number): Observable<User[]> {
+  deleteUser(userID: string): Observable<User[]> {
     return this.httpClient
       .delete<User[]>(`${environment.apiURL}/users/${userID}`)
       .pipe(

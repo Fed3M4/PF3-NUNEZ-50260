@@ -27,7 +27,7 @@ export interface Alumnos {
 }
 
 export interface User {
-    id: number;
+    id: string;
     firstName: string;
     lastName: string;
     phone: number;

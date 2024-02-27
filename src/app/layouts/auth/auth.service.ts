@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LoginData, User } from '../../shared/models/interfaces';
 import { Router } from '@angular/router';
-import { catchError, map, of } from 'rxjs';
-import { LoadingService } from '../../core/services/loading.service';
+import { Observable, catchError, map, of, tap } from 'rxjs';
 import { UsersService } from '../../core/services/users.service';
 import { LoginService } from '../../core/services/login.service';
 import { AlertService } from '../../core/services/alerts.service';
@@ -16,7 +15,6 @@ export class AuthService {
   authUser: User | null = null;
   constructor(
     private router: Router,
-    private loadingService: LoadingService,
     private usersService: UsersService,
     private loginService: LoginService,
     private alertService: AlertService,
@@ -24,38 +22,31 @@ export class AuthService {
     private store: Store
   ) {}
 
-  private setAuthUser(mockUser: User | null = null): void {
-    this.authUser = mockUser;
-    if (mockUser) {
-      localStorage.setItem('token', mockUser.token);
-    } else {
-      localStorage.removeItem('token');
-    }
+  private setAuthUser(user: User): void {
+    this.store.dispatch(AuthActions.setAuthUser({ user }));
+    localStorage.setItem('token', user.token);
   }
 
-  login(data: LoginData): void {
-    const email = data.email;
-    const password = data.password;
-    this.usersService.getUserByEmailAndPassword(email, password).subscribe({
-      next: (emailAndPassUser) => {
-        if (emailAndPassUser) {
-          this.loginService.setUserName(emailAndPassUser.firstName);
-          console.log(emailAndPassUser);
-          this.setAuthUser(emailAndPassUser);
-          this.router.navigate(['dashboard', 'home']);
-        } else {
-          this.alertService.showError('Email o contraseña inválida');
-        }
-      },
-      error: (error) => {
-        console.error('Error al obtener usuario:', error);
-        this.alertService.showError('Error al obtener usuario');
-      },
-    });
+  login(data: LoginData): Observable<User[]> {
+    return this.httpClient
+      .get<User[]>(
+        `${environment.apiURL}/users?email=${data.email}&password=${data.password}`
+      )
+      .pipe(
+        tap((response) => {
+          if (!!response[0]) {
+            this.setAuthUser(response[0]);
+            this.loginService.setUserName(response[0].firstName);
+            this.router.navigate(['dashboard', 'home']);
+          } else {
+            this.alertService.showError('Email o password invalidos');
+          }
+        })
+      );
   }
 
   logout(): void {
-    this.authUser = null;
+    this.store.dispatch(AuthActions.logout());
     this.router.navigate(['auth', 'login']);
     localStorage.removeItem('token');
   }
@@ -78,5 +69,9 @@ export class AuthService {
         }),
         catchError(() => of(false))
       );
+  }
+
+  getLoggedInUserName(): string | undefined {
+    return this.authUser?.firstName
   }
 }

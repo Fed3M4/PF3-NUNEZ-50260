@@ -36,13 +36,7 @@ export class DashboardComponent implements OnInit {
     });
   }
   userLoggeded(): void {
-    if (this.user) {
-      this.isLoggedIn = true;
-      console.log(this.isLoggedIn);
-    } else {
-      this.isLoggedIn = false;
-      console.log(this.isLoggedIn);
-    }
+    this.isLoggedIn = !!this.user;
   }
   logout(): void {
     if (confirm('¿Querés desloguearte?')) {

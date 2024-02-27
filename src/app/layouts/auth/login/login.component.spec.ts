@@ -9,7 +9,7 @@ import { MockProvider } from 'ng-mocks';
 describe('LoginComponent', () => {
   let component: LoginComponent;
 
-  beforeEach(() => {
+  beforeEach(  () => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
       imports: [SharedModule],
