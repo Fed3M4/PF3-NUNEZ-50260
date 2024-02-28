@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from '../../shared/models/interfaces';
+import { Pagination, User } from '../../shared/models/interfaces';
 import { Observable, catchError, delay, finalize, map, of } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -41,9 +41,7 @@ export class UsersService {
   getAlumnos(): Observable<User[]> {
     this.loadingService.setIsLoading(true)
     return this.httpClient
-      .get<User[]>(`${environment.apiURL}/users`, {
-        params: new HttpParams().set('role', 'Alumno'),
-      })
+      .get<User[]>(`${environment.apiURL}/users?role=Alumno`)
       .pipe(
         delay(1000),
         catchError((error) => {
@@ -57,9 +55,7 @@ export class UsersService {
   getProfesores(): Observable<User[]> {
     this.loadingService.setIsLoading(true)
     return this.httpClient
-      .get<User[]>(`${environment.apiURL}/users`, {
-        params: new HttpParams().set('role', 'Profesor'),
-      })
+      .get<User[]>(`${environment.apiURL}/users?role=Profesor`)
       .pipe(
         delay(1000),
         catchError((error) => {
@@ -68,6 +64,10 @@ export class UsersService {
         }),
         finalize(()=> this.loadingService.setIsLoading(false))
       );
+  }
+
+  paginate(page: number, perPage?: number) {
+    return this.httpClient.get<Pagination<User>>(`${environment.apiURL}/users?role=Alumno&_page=${page}&_per_page=${perPage}`)
   }
 
   createUser(payload: User) {

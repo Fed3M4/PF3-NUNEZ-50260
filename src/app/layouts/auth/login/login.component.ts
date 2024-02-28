@@ -25,15 +25,21 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
-    } else {
-      this.isLoading = true;
-      this.authService.login(this.loginForm.value).subscribe({
-        complete: () => {
-          this.isLoading = false;
-        }
-      });
-    }
+  //   if (this.loginForm.invalid) {
+  //     this.loginForm.markAllAsTouched();
+  //   } else {
+  //     this.isLoading = true;
+  //     this.authService.login(this.loginForm.value).subscribe({
+  //       complete: () => {
+  //         this.isLoading = false;
+  //       }
+  //     });
+  //   }
+  // }
+  if (this.loginForm.invalid) {
+    this.loginForm.markAllAsTouched();
+  } else {
+    this.authService.login(this.loginForm.value).subscribe()
   }
+}
 }

@@ -7,7 +7,7 @@ import { LoginService } from '../../core/services/login.service';
 import { AlertService } from '../../core/services/alerts.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Store } from '@ngrx/store';
+// import { Store } from '@ngrx/store';
 import { AuthActions } from '../../core/store/auth/actions';
 
 @Injectable({ providedIn: 'root' })
@@ -15,16 +15,22 @@ export class AuthService {
   authUser: User | null = null;
   constructor(
     private router: Router,
-    private usersService: UsersService,
     private loginService: LoginService,
     private alertService: AlertService,
     private httpClient: HttpClient,
-    private store: Store
+    // private store: Store
   ) {}
 
+  // private setAuthUser(user: User): void {
+  //   this.store.dispatch(AuthActions.setAuthUser({ user }));
+  //   localStorage.setItem('token', user.token);
+  // }
   private setAuthUser(user: User): void {
-    this.store.dispatch(AuthActions.setAuthUser({ user }));
-    localStorage.setItem('token', user.token);
+    this.authUser = user;
+    localStorage.setItem(
+      'token',
+      user.token
+    )
   }
 
   login(data: LoginData): Observable<User[]> {
@@ -36,6 +42,7 @@ export class AuthService {
         tap((response) => {
           if (!!response[0]) {
             this.setAuthUser(response[0]);
+            console.log(this.authUser)
             this.loginService.setUserName(response[0].firstName);
             this.router.navigate(['dashboard', 'home']);
           } else {
@@ -46,7 +53,8 @@ export class AuthService {
   }
 
   logout(): void {
-    this.store.dispatch(AuthActions.logout());
+    // this.store.dispatch(AuthActions.logout());
+    this.authUser = null
     this.router.navigate(['auth', 'login']);
     localStorage.removeItem('token');
   }
@@ -62,7 +70,8 @@ export class AuthService {
             this.setAuthUser(response[0]);
             return true;
           } else {
-            this.store.dispatch(AuthActions.logout());
+            // this.store.dispatch(AuthActions.logout());
+            this.authUser = null
             localStorage.removeItem('token');
             return false;
           }

@@ -5,6 +5,7 @@ import { AltaAlumnosComponent } from './components/alta-alumnos/alta-alumnos.com
 import { UsersService } from '../../../../core/services/users.service';
 import { LoadingService } from '../../../../core/services/loading.service';
 import { AlertService } from '../../../../core/services/alerts.service';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-alumnos',
@@ -15,6 +16,10 @@ export class AlumnosComponent implements OnInit {
   displayedColumns: string[] = ['id', 'fullName', 'phone', 'email', 'delete'];
   dataSource: User[] = [];
   colorearTabla = false;
+
+  totalItems = 0;
+  pageSize = 5;
+  currentPage = 1
 
   constructor(
     private usersService: UsersService,
@@ -27,9 +32,28 @@ export class AlumnosComponent implements OnInit {
   }
 
   cargarPantalla(): void {
-    this.usersService.getAlumnos().subscribe({
-      next: (alumnos) => (this.dataSource = alumnos),
-    });
+    // this.usersService.getAlumnos().subscribe({
+    //   next: (alumnos) => (this.dataSource = alumnos),
+    // });
+    this.usersService.paginate(this.currentPage, 5).subscribe({
+      next: (value) => {
+        const paginationResult = value;
+        console.log(paginationResult)
+        this.totalItems = paginationResult.items;
+        this.dataSource= paginationResult.data
+      }
+    })
+  }
+
+  onPage(ev: PageEvent) {
+    this.currentPage = ev.pageIndex + 1
+    this.usersService.paginate(this.currentPage, ev.pageSize).subscribe({
+      next: (paginateResult) => {
+        this.totalItems = paginateResult.items;
+        this.dataSource = paginateResult.data;
+        this.pageSize = ev.pageSize;
+      }
+    })
   }
 
   eliminarAlumnos(element: User): void {

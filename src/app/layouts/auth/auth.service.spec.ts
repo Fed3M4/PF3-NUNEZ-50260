@@ -5,7 +5,6 @@ import {
 } from '@angular/common/http/testing';
 import { User } from '../../shared/models/interfaces';
 import { AuthService } from './auth.service';
-import { MockProvider } from 'ng-mocks';
 
 describe('Pruebas de AuthService', () => {
   let authService: AuthService;
@@ -13,14 +12,16 @@ describe('Pruebas de AuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        MockProvider(AuthService)
-    ],
+    //   providers: [
+    //     MockProvider(AuthService)
+    // ],
+    providers: [AuthService],
       imports: [HttpClientTestingModule],
     });
 
     authService = TestBed.inject(AuthService);
     httpController = TestBed.inject(HttpTestingController);
+    
   });
 
   it('AuthService debe estar definido', () => {
@@ -44,16 +45,17 @@ describe('Pruebas de AuthService', () => {
     ];
 
     authService
-      .login({ email: 'mock@mail.com', password: 'password' })
-      expect(authService.authUser).toEqual(MOCK_RESPONSE[0]);
+      .login({ email: 'mock@mail.com', password: 'password' }).subscribe({
+        next: (user) => {
+          expect(authService.authUser).toEqual(MOCK_RESPONSE[0]);
+        }
+      })
 
-
-    // Sobre escribimos la request por una request falsa
-    // httpController
-    //   .expectOne({
-    //     url: 'http://localhost:3000/users?email=mock@mail.com&password=password',
-    //     method: 'GET',
-    //   })
-    //   .flush(MOCK_RESPONSE);
+    httpController
+      .expectOne({
+        url: 'http://localhost:3000/users?email=mock@mail.com&password=password',
+        method: 'GET',
+      })
+      .flush(MOCK_RESPONSE);
   });
 });
