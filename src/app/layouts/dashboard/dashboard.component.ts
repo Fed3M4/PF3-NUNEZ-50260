@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingService } from '../../core/services/loading.service';
-import { LoginService } from '../../core/services/login.service';
 import { AlertService } from '../../core/services/alerts.service';
 import { AuthService } from '../auth/auth.service';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { User } from '../../shared/models/interfaces';
+import { selectAuthUser } from '../../core/store/auth/selectors';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,16 +14,19 @@ import { AuthService } from '../auth/auth.service';
 })
 export class DashboardComponent implements OnInit {
   showFiller = false;
-  user?: string;
+
+  authuser$: Observable<User | null>
   isLoading = false;
   isLoggedIn = false;
 
   constructor(
     private loadingService: LoadingService,
-    private loginService: LoginService,
     private alertService: AlertService,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private store: Store
+  ) {
+    this.authuser$ = this.store.select(selectAuthUser)
+  }
   ngOnInit(): void {
     this.loadingService.isLoading$.subscribe({
       next: (value) => {
@@ -29,20 +35,11 @@ export class DashboardComponent implements OnInit {
         });
       },
     });
-    
-    this.loginService.getUserName().subscribe((userName) => {
-      this.user = userName;
-      this.userLoggeded();
-    });
   }
-  userLoggeded(): void {
-    this.isLoggedIn = !!this.user;
-  }
+
   logout(): void {
     if (confirm('¿Querés desloguearte?')) {
       this.authService.logout()
-      this.user = '';
-      this.userLoggeded();
       this.alertService.showSucces('¡Deslogueadoo con éxito!', '¡Hasta la próxima!')
     }
   }

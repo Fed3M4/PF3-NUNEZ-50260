@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Pagination, User } from '../../shared/models/interfaces';
 import { Observable, catchError, delay, finalize, map, of } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { AlertService } from './alerts.service';
 import { LoadingService } from './loading.service';

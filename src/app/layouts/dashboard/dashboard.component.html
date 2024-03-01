@@ -73,20 +73,9 @@
       </button>
       <span appTitulosTamanio>Proyecto Final - Lista de Alumnos</span>
       <span class="example-spacer"></span>
-      <ng-container *ngIf="isLoggedIn; else showLoginButton">
-        <h2 appTitulosTamanio>¡Bienvenido {{ user }}!</h2>
-      </ng-container>
-      <ng-template #showLoginButton>
-        <a routerLink="login"
-          ><button
-            mat-button
-            style="background-color: rgb(48, 47, 47)"
-            class="btn btn-primary"
-          >
-            Iniciar sesión
-          </button></a
-        >
-      </ng-template>
+      <div *ngIf="authuser$ | async; let user">
+        <h2 appTitulosTamanio>¡Bienvenido {{ user?.firstName }}!</h2>
+      </div>
     </mat-toolbar>
   </div>
   <div class="d-flex justify-content-center align-items-center">
